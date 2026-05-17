@@ -10,13 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class HelloController {
 
     @ResponseBody
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello World!";
-    }
-
     @GetMapping("/introduce")
-    public String introduce(@RequestParam(defaultValue = "권민상")String name, Model model) {
-        return "hello";
+    public String introduce(@RequestParam(required = false, defaultValue = "권민상")String name, Model model) {
+        return String.format("반갑습니다 제 이름은 %s이라고 합니다.",name);
     }
 }
