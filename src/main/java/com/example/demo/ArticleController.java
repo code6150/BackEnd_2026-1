@@ -20,5 +20,10 @@ public class ArticleController {
         return "생성완료";
     }
 
+    @DeleteMapping("/article/{id}")
+    public String deleteArticle(@PathVariable int id) {
+        article.remove(id);
+        return "삭제 완료";
+    }
 
 }
