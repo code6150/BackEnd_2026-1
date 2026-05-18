@@ -16,7 +16,7 @@ public class HelloController {
     }
 
     @ResponseBody
-    @GetMapping("/introduce")
+    @GetMapping(value = "/introduce",params = "name")
     public String introduce(@RequestParam(required = false)String name, Model model) {
         return String.format("반갑습니다 제 이름은 %s이라고 합니다.",name);
     }
