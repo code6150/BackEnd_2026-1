@@ -15,8 +15,8 @@ public class ArticleController {
     }
 
     @PutMapping("/article")
-    public String putArticle(@RequestBody Article newarticle) {
-        article.put(newarticle.getId(), newarticle);
+    public String putArticle(@RequestParam int id, @RequestParam String description) {
+        article.put(id, new Article(id, description));
         return "생성완료";
     }
 
