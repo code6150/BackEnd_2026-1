@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -10,8 +11,11 @@ public class ArticleController {
     HashMap<Integer, Article> article = new HashMap<Integer, Article>();
 
     @GetMapping("/article/{id}")
-    public Article getArticle(@PathVariable int id) {
-        return article.get(id);
+    public ResponseEntity<?> getArticle(@PathVariable int id) {
+        if (!article.containsKey(id)) {
+            return ResponseEntity.status(404).body("존재하지 않는 게시물입니다.");
+        }
+        return ResponseEntity.ok(article.get(id));
     }
 
     @PostMapping("/article")
