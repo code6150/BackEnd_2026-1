@@ -1,8 +1,14 @@
 package com.example.demo;
 
 public class Article {
-    private int id;
-    private String description;
+    private final int id;
+    private final String description;
+
+    public Article(int id, String description) {
+        this.id = id;
+        this.description = description;
+    }
+
 
     public int getId() {
         return id;
