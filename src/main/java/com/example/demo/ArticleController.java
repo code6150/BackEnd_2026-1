@@ -14,10 +14,9 @@ public class ArticleController {
         return article.get(id);
     }
 
-    @PutMapping("/article")
-    public String putArticle(@RequestParam int id, @RequestParam String description) {
-        article.put(id, new Article(id, description));
-        return "생성완료";
+    @PostMapping("/article")
+    public String postArticle(@RequestBody String description) {
+        return "게시 완료";
     }
 
     @DeleteMapping("/article/{id}")
@@ -26,4 +25,9 @@ public class ArticleController {
         return "삭제 완료";
     }
 
+    @PutMapping("/article/{id}")
+    public String updateArticle(@PathVariable int id, @RequestBody Article updatedArticle) {
+        article.put(id, updatedArticle);
+        return "수정 완료";
+    }
 }
