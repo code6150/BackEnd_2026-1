@@ -1,9 +1,6 @@
 package com.example.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
@@ -17,8 +14,11 @@ public class ArticleController {
         return article.get(id);
     }
 
-    @PutMapping("/article/{id}")
-    public String putArticle() {return "a";}
+    @PutMapping("/article")
+    public String putArticle(@RequestBody Article newarticle) {
+        article.put(newarticle.getId(), newarticle);
+        return "생성완료";
+    }
 
 
 }
