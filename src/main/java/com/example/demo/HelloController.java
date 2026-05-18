@@ -17,7 +17,10 @@ public class HelloController {
     }
 
     @GetMapping("/json")
-    public  info() {
-
+    public InfoApi info() {
+        InfoApi identification = new InfoApi();
+        identification.setAge(20);
+        identification.setName("권민상");
+        return identification;
     }
 }
