@@ -15,8 +15,13 @@ public class ArticleController {
     }
 
     @PostMapping("/article")
-    public String postArticle(@RequestBody String description) {
-        return "게시 완료";
+    public String createArticle(@RequestParam String description) {
+        int newId = 0;
+        while (article.containsKey(newId)) {
+            newId++;
+        }
+        article.put(newId, new Article(newId, description));
+        return "생성 완료";
     }
 
     @DeleteMapping("/article/{id}")
