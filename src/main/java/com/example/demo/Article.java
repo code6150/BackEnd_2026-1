@@ -1,16 +1,18 @@
 package com.example.demo;
 
 public class Article {
-    private final int id;
+    private static Long followingId = 1L;
+
+    private final Long id;
     private final String description;
 
-    public Article(int id, String description) {
-        this.id = id;
+    public Article(String description) {
+        this.id = followingId++;
         this.description = description;
     }
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

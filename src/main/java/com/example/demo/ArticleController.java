@@ -10,7 +10,7 @@ import java.util.HashMap;
 @RestController
 public class ArticleController {
 
-    HashMap<Integer, Article> article = new HashMap<Integer, Article>();
+    HashMap<Long,Article> article = new HashMap<>();
     ArrayList<Member> member = new ArrayList<>();
 
     @PostConstruct
@@ -21,12 +21,12 @@ public class ArticleController {
     }
 
     @GetMapping("/articles")
-    public HashMap<Integer, Article> getArticles() {
+    public HashMap<Long, Article> getArticles() {
         return article;
     }
 
     @GetMapping("/article/{id}")
-    public ResponseEntity<?> getArticle(@PathVariable int id) {
+    public ResponseEntity<?> getArticle(@PathVariable Long id) {
         if (!article.containsKey(id)) {
             return ResponseEntity.status(404).body("존재하지 않는 게시물입니다.");
         }
@@ -35,22 +35,19 @@ public class ArticleController {
 
     @PostMapping("/article")
     public String createArticle(@RequestParam String description) {
-        int newId = 0;
-        while (article.containsKey(newId)) {
-            newId++;
-        }
-        article.put(newId, new Article(newId, description));
+        Article newArticle = new Article(description);
+        article.put(newArticle.getId(), newArticle);
         return "생성 완료";
     }
 
     @DeleteMapping("/article/{id}")
-    public String deleteArticle(@PathVariable int id) {
+    public String deleteArticle(@PathVariable Long id) {
         article.remove(id);
         return "삭제 완료";
     }
 
     @PutMapping("/article/{id}")
-    public String updateArticle(@PathVariable int id, @RequestBody Article updatedArticle) {
+    public String updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
         article.put(id, updatedArticle);
         return "수정 완료";
     }
