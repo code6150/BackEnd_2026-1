@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 @RestController
 public class ArticleController {
 
     HashMap<Long, Article> article = new HashMap<>();
     ArrayList<Member> member = new ArrayList<>();
+    Random random = new Random();
 
     @PostConstruct
     public void setDefault() {
@@ -38,7 +40,8 @@ public class ArticleController {
 
     @PostMapping("/article")
     public String createArticle(@RequestParam String title, @RequestParam String description) {
-        Article newArticle = new Article(title, description);
+        String author = member.get(random.nextInt(member.size())).getNickName();
+        Article newArticle = new Article(title, description, author);
         article.put(newArticle.getId(), newArticle);
         return "생성 완료";
     }

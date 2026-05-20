@@ -9,12 +9,14 @@ public class Article {
     private String title;
     private String description;
     private final LocalDateTime LDT;
+    private final String member;
     private LocalDateTime lastModifiedTime;
 
-    public Article(String title, String description) {
+    public Article(String title, String description, String member) {
         this.id = followingId++;
         this.title = title;
         this.description = description;
+        this.member = member;
         this.LDT = LocalDateTime.now();
         lastModifiedTime = null;
     }
@@ -30,6 +32,10 @@ public class Article {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getMember() {
+        return member;
     }
 
     public LocalDateTime getLDT() {
