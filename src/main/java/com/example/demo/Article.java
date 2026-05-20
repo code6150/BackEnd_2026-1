@@ -36,6 +36,10 @@ public class Article {
         return LDT;
     }
 
+    public LocalDateTime getLastModifiedTime() {
+        return lastModifiedTime;
+    }
+
     public void setLastModifiedTime(LocalDateTime lastModifiedTime) {
         this.lastModifiedTime = lastModifiedTime;
     }

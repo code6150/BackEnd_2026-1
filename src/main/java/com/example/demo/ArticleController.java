@@ -51,9 +51,8 @@ public class ArticleController {
 
     @PutMapping("/article/{id}")
     public String updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
-        Article modifyingArticle = article.get(id);
-        modifyingArticle.setLastModifiedTime(LocalDateTime.now());
-        article.put(modifyingArticle.getId(), modifyingArticle);
+        updatedArticle.setLastModifiedTime(LocalDateTime.now());
+        article.put(id, updatedArticle);
         return "수정 완료";
     }
 }
