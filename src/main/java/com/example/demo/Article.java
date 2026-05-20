@@ -6,8 +6,8 @@ public class Article {
     private static Long followingId = 1L;
 
     private final Long id;
-    private final String title;
-    private final String description;
+    private String title;
+    private String description;
     private final LocalDateTime LDT;
     private LocalDateTime lastModifiedTime;
 
@@ -38,6 +38,14 @@ public class Article {
 
     public LocalDateTime getLastModifiedTime() {
         return lastModifiedTime;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setLastModifiedTime(LocalDateTime lastModifiedTime) {

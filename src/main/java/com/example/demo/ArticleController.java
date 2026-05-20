@@ -11,16 +11,16 @@ import java.util.HashMap;
 @RestController
 public class ArticleController {
 
-    HashMap<Long,Article> article = new HashMap<>();
+    HashMap<Long, Article> article = new HashMap<>();
     ArrayList<Member> member = new ArrayList<>();
 
     @PostConstruct
     public void setDefault() {
         ArticleBoard articleBoard = new ArticleBoard("자유게시판");
 
-        member.add(new Member("회원1","member1@gmail.com","1111"));
-        member.add(new Member("회원2","member2@gmail.com","2222"));
-        member.add(new Member("회원3","member3@gmail.com","3333"));
+        member.add(new Member("회원1", "member1@gmail.com", "1111"));
+        member.add(new Member("회원2", "member2@gmail.com", "2222"));
+        member.add(new Member("회원3", "member3@gmail.com", "3333"));
     }
 
     @GetMapping("/articles")
@@ -51,8 +51,11 @@ public class ArticleController {
 
     @PutMapping("/article/{id}")
     public String updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
-        updatedArticle.setLastModifiedTime(LocalDateTime.now());
-        article.put(id, updatedArticle);
+        Article modifiedArticle = article.get(id);
+        modifiedArticle.setTitle(updatedArticle.getTitle());
+        modifiedArticle.setDescription(updatedArticle.getDescription());
+        modifiedArticle.setLastModifiedTime(LocalDateTime.now());
+        article.put(id, modifiedArticle);
         return "수정 완료";
     }
 }
