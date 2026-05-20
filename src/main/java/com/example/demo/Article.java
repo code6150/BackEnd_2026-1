@@ -9,14 +9,16 @@ public class Article {
     private String title;
     private String description;
     private final LocalDateTime LDT;
-    private final String member;
+    private final Long memberId;
+    private final Long boardId;
     private LocalDateTime lastModifiedTime;
 
-    public Article(String title, String description, String member) {
+    public Article(String title, String description, Long memberId, Long boardId) {
         this.id = followingId++;
         this.title = title;
         this.description = description;
-        this.member = member;
+        this.memberId = memberId;
+        this.boardId = boardId;
         this.LDT = LocalDateTime.now();
         lastModifiedTime = null;
     }
@@ -34,8 +36,12 @@ public class Article {
         return description;
     }
 
-    public String getMember() {
-        return member;
+    public Long getMemberId() {
+        return memberId;
+    }
+
+    public Long getBoardId() {
+        return boardId;
     }
 
     public LocalDateTime getLDT() {

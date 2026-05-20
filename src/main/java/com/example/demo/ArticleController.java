@@ -12,17 +12,19 @@ import java.util.Random;
 @RestController
 public class ArticleController {
 
-    HashMap<Long, Article> article = new HashMap<>();
-    ArrayList<Member> member = new ArrayList<>();
     Random random = new Random();
+
+    HashMap<Long, Article> article = new HashMap<>();
+    ArrayList<Member> members = new ArrayList<>();
+    ArrayList<ArticleBoard> articleBoards = new ArrayList<>();
 
     @PostConstruct
     public void setDefault() {
-        ArticleBoard articleBoard = new ArticleBoard("자유게시판");
+        articleBoards.add(new ArticleBoard("자유게시판"));
 
-        member.add(new Member("회원1", "member1@gmail.com", "1111"));
-        member.add(new Member("회원2", "member2@gmail.com", "2222"));
-        member.add(new Member("회원3", "member3@gmail.com", "3333"));
+        members.add(new Member("회원1", "member1@gmail.com", "1111"));
+        members.add(new Member("회원2", "member2@gmail.com", "2222"));
+        members.add(new Member("회원3", "member3@gmail.com", "3333"));
     }
 
     @GetMapping("/articles")
@@ -40,8 +42,9 @@ public class ArticleController {
 
     @PostMapping("/article")
     public String createArticle(@RequestParam String title, @RequestParam String description) {
-        String author = member.get(random.nextInt(member.size())).getNickName();
-        Article newArticle = new Article(title, description, author);
+        Long authorId = members.get(random.nextInt(members.size())).getId();
+        Long boardId = articleBoards.get(0).getId();
+        Article newArticle = new Article(title, description, authorId, boardId);
         article.put(newArticle.getId(), newArticle);
         return "생성 완료";
     }
