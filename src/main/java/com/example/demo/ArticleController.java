@@ -15,7 +15,9 @@ public class ArticleController {
 
     @PostConstruct
     public void setDefault() {
-
+        member.add(new Member("회원1","member1@gmail.com","1111"));
+        member.add(new Member("회원2","member2@gmail.com","2222"));
+        member.add(new Member("회원3","member3@gmail.com","3333"));
     }
 
     @GetMapping("/articles")
