@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +12,10 @@ public class ArticleController {
 
     HashMap<Integer, Article> article = new HashMap<Integer, Article>();
     ArrayList<Member> member = new ArrayList<>();
-    public ArticleController() {
-        this.member.add(new Member());
+
+    @PostConstruct
+    public void setDefault() {
+
     }
 
     @GetMapping("/articles")
