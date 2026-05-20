@@ -34,8 +34,8 @@ public class ArticleController {
     }
 
     @PostMapping("/article")
-    public String createArticle(@RequestParam String description) {
-        Article newArticle = new Article(description);
+    public String createArticle(@RequestParam String title, @RequestParam String description) {
+        Article newArticle = new Article(title, description);
         article.put(newArticle.getId(), newArticle);
         return "생성 완료";
     }
