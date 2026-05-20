@@ -10,6 +10,11 @@ public class ArticleController {
 
     HashMap<Integer, Article> article = new HashMap<Integer, Article>();
 
+    @GetMapping("/articles")
+    public HashMap<Integer, Article> getArticles() {
+        return article;
+    }
+
     @GetMapping("/article/{id}")
     public ResponseEntity<?> getArticle(@PathVariable int id) {
         if (!article.containsKey(id)) {
