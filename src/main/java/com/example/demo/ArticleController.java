@@ -3,12 +3,17 @@ package com.example.demo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @RestController
 public class ArticleController {
 
     HashMap<Integer, Article> article = new HashMap<Integer, Article>();
+    ArrayList<Member> member = new ArrayList<>();
+    public ArticleController() {
+        this.member.add(new Member());
+    }
 
     @GetMapping("/articles")
     public HashMap<Integer, Article> getArticles() {

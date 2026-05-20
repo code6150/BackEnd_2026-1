@@ -1,6 +1,8 @@
 package com.example.demo;
 
 public class Member {
+
+
     private Long id;
     private String nickName;
     private String emailAddress;
