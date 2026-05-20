@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,7 +49,9 @@ public class ArticleController {
 
     @PutMapping("/article/{id}")
     public String updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
-        article.put(id, updatedArticle);
+        Article modifyingArticle = article.get(id);
+        modifyingArticle.setLastModifiedTime(LocalDateTime.now());
+        article.put(modifyingArticle.getId(), modifyingArticle);
         return "수정 완료";
     }
 }
