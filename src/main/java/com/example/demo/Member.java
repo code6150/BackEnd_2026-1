@@ -9,9 +9,9 @@ public class Member {
     }
 
     private static Long id;
-    private String nickName;
-    private String emailAddress;
-    private String passWord;
+    private final String nickName;
+    private final String emailAddress;
+    private final String passWord;
 
     public Long getId() {
         return id;
