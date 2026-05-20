@@ -1,11 +1,14 @@
 package com.example.demo;
 
 public class Member {
-    public Member() {
-
+    public Member(String nickName, String email, String passWord) {
+        id++;
+        this.nickName = nickName;
+        this.emailAddress = email;
+        this.passWord = passWord;
     }
 
-    private Long id;
+    private static Long id;
     private String nickName;
     private String emailAddress;
     private String passWord;
