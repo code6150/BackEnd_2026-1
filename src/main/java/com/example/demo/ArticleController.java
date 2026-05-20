@@ -16,6 +16,8 @@ public class ArticleController {
 
     @PostConstruct
     public void setDefault() {
+        ArticleBoard articleBoard = new ArticleBoard("자유게시판");
+
         member.add(new Member("회원1","member1@gmail.com","1111"));
         member.add(new Member("회원2","member2@gmail.com","2222"));
         member.add(new Member("회원3","member3@gmail.com","3333"));

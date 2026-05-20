@@ -2,7 +2,7 @@ package com.example.demo;
 
 public class ArticleBoard {
 
-    private static Long followingId;
+    private static Long followingId = 1L;
 
     private final Long id;
     private final String boardName;
