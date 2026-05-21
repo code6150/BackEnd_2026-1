@@ -2,6 +2,7 @@ package com.example.demo;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ public class ArticleController {
 
     Random random = new Random();
 
-    HashMap<Long, Article> article = new HashMap<>();
+    HashMap<Long, Article> articles = new HashMap<>();
     ArrayList<Member> members = new ArrayList<>();
     ArrayList<ArticleBoard> articleBoards = new ArrayList<>();
 
@@ -27,17 +28,23 @@ public class ArticleController {
         members.add(new Member("회원3", "member3@gmail.com", "3333"));
     }
 
+    @GetMapping("/posts")
+    public String getArticlesView(Model model) {
+        model.addAttribute("articles", articles);
+        return "articles";
+    }
+
     @GetMapping("/articles")
     public HashMap<Long, Article> getArticles() {
-        return article;
+        return articles;
     }
 
     @GetMapping("/article/{id}")
     public ResponseEntity<?> getArticle(@PathVariable Long id) {
-        if (!article.containsKey(id)) {
+        if (!articles.containsKey(id)) {
             return ResponseEntity.status(404).body("존재하지 않는 게시물입니다.");
         }
-        return ResponseEntity.ok(article.get(id));
+        return ResponseEntity.ok(articles.get(id));
     }
 
     @PostMapping("/article")
@@ -45,23 +52,23 @@ public class ArticleController {
         Long authorId = members.get(random.nextInt(members.size())).getId();
         Long boardId = articleBoards.get(0).getId();
         Article newArticle = new Article(title, description, authorId, boardId);
-        article.put(newArticle.getId(), newArticle);
+        articles.put(newArticle.getId(), newArticle);
         return "생성 완료";
     }
 
     @DeleteMapping("/article/{id}")
     public String deleteArticle(@PathVariable Long id) {
-        article.remove(id);
+        articles.remove(id);
         return "삭제 완료";
     }
 
     @PutMapping("/article/{id}")
     public String updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
-        Article modifiedArticle = article.get(id);
+        Article modifiedArticle = articles.get(id);
         modifiedArticle.setTitle(updatedArticle.getTitle());
         modifiedArticle.setDescription(updatedArticle.getDescription());
         modifiedArticle.setLastModifiedTime(LocalDateTime.now());
-        article.put(id, modifiedArticle);
+        articles.put(id, modifiedArticle);
         return "수정 완료";
     }
 }
