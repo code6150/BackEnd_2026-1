@@ -17,16 +17,16 @@ public class ArticleController {
     Random random = new Random();
 
     HashMap<Long, Article> articles = new HashMap<>();
-    ArrayList<Member> members = new ArrayList<>();
+    HashMap<Long, Member> members = new HashMap<>();
     ArrayList<ArticleBoard> articleBoards = new ArrayList<>();
 
     @PostConstruct
     public void setDefault() {
         articleBoards.add(new ArticleBoard("자유게시판"));
 
-        members.add(new Member("회원1", "member1@gmail.com", "1111"));
-        members.add(new Member("회원2", "member2@gmail.com", "2222"));
-        members.add(new Member("회원3", "member3@gmail.com", "3333"));
+        members.put(1L, new Member("회원1", "member1@gmail.com", "1111"));
+        members.put(2L, new Member("회원2", "member2@gmail.com", "2222"));
+        members.put(3L, new Member("회원3", "member3@gmail.com", "3333"));
     }
 
     @GetMapping("/posts")
@@ -34,6 +34,7 @@ public class ArticleController {
         String boardTitle = articleBoards.get(0).getBoardName();
         model.addAttribute("boardTitle", boardTitle);
         model.addAttribute("articles", articles);
+        model.addAttribute("members", members);
         return "articles";
     }
 
@@ -55,7 +56,7 @@ public class ArticleController {
     @ResponseBody
     @PostMapping("/article")
     public String createArticle(@RequestParam String title, @RequestParam String description) {
-        Long authorId = members.get(random.nextInt(members.size())).getId();
+        Long authorId = members.get(random.nextLong(members.size())).getId();
         Long boardId = articleBoards.get(0).getId();
         Article newArticle = new Article(title, description, authorId, boardId);
         articles.put(newArticle.getId(), newArticle);
