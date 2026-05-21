@@ -2,6 +2,7 @@ package com.example.demo;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-@RestController
+@Controller
 public class ArticleController {
 
     Random random = new Random();
@@ -36,11 +37,13 @@ public class ArticleController {
         return "articles";
     }
 
+    @ResponseBody
     @GetMapping("/articles")
     public HashMap<Long, Article> getArticles() {
         return articles;
     }
 
+    @ResponseBody
     @GetMapping("/article/{id}")
     public ResponseEntity<?> getArticle(@PathVariable Long id) {
         if (!articles.containsKey(id)) {
@@ -49,6 +52,7 @@ public class ArticleController {
         return ResponseEntity.ok(articles.get(id));
     }
 
+    @ResponseBody
     @PostMapping("/article")
     public String createArticle(@RequestParam String title, @RequestParam String description) {
         Long authorId = members.get(random.nextInt(members.size())).getId();
@@ -58,12 +62,14 @@ public class ArticleController {
         return "생성 완료";
     }
 
+    @ResponseBody
     @DeleteMapping("/article/{id}")
     public String deleteArticle(@PathVariable Long id) {
         articles.remove(id);
         return "삭제 완료";
     }
 
+    @ResponseBody
     @PutMapping("/article/{id}")
     public String updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
         Article modifiedArticle = articles.get(id);

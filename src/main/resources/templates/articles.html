@@ -9,7 +9,7 @@
 
     <div th:each="article : ${articles.values()}">
         <h2 th:text="${article.getTitle()}"></h2>
-        <p th:text="${article.getMemberId()} ${article.getLDT()}"></p>
+        <p th:text="${article.getMemberId()+ ' | ' +article.getLDT()}"></p>
         <p th:text="${article.getDescription()}"></p>
     </div>
 </body>
