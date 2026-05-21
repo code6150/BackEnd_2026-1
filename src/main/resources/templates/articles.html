@@ -9,8 +9,8 @@
 
     <div th:each="article : ${articles.values()}">
         <h2 th:text="${article.getTitle()}"></h2>
-        <q th:text="${members.get(article.getMemberId()).getNickName() + ' | ' + article.getLDT()}"></q>
-        <q th:text="${article.getDescription()}"></q>
+        <div th:text="${members.get(article.getMemberId()).getNickName() + ' | ' + article.getLDT()}"></div>
+        <div th:text="${article.getDescription()}"></div>
     </div>
 </body>
 </html>
