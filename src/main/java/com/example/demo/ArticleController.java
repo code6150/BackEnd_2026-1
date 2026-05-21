@@ -30,6 +30,8 @@ public class ArticleController {
 
     @GetMapping("/posts")
     public String getArticlesView(Model model) {
+        String boardTitle = articleBoards.get(0).getBoardName();
+        model.addAttribute("boardTitle", boardTitle);
         model.addAttribute("articles", articles);
         return "articles";
     }
