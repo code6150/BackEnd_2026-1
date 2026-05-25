@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -10,9 +11,13 @@ public class ArticleService {
 
     Random random = new Random();
 
+    @Autowired
     private ArticleRepository articles;
+    @Autowired
     private MembersRepository members;
-    private BoardRepository articleBoards;
+    @Autowired
+    private BoardRepository boardRepository;
+
 
     public HashMap<Long,Article> getArticle() {
         return articles.findAll();
@@ -23,7 +28,7 @@ public class ArticleService {
     }
 
     public ArrayList<ArticleBoard> getBoards() {
-        return articleBoards.findAll();
+        return boardRepository.findAll();
     }
 
     public void updateArticle(Long id, Article updatedArticle) {
@@ -36,7 +41,7 @@ public class ArticleService {
 
     public void creatArticle(String title, String description) {
         Long authorId = members.findById(random.nextLong(members.findAll().size())).getId();
-        Long boardId = articleBoards.findAll().get(0).getId();
+        Long boardId = boardRepository.findAll().get(0).getId();
         Article newArticle = new Article(title, description, authorId, boardId);
         articles.findAll().put(newArticle.getId(), newArticle);
     }

@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,12 +12,8 @@ import java.util.*;
 @Controller
 public class ArticleController {
 
-    private final ArticleService articleService;
-
-    // 이 생성자만 추가하면 됨 (@Autowired 생략 가능)
-    public ArticleController(ArticleService articleService) {
-        this.articleService = articleService;
-    }
+    @Autowired
+    private ArticleService articleService;
 
     @GetMapping("/posts")
     public String getArticlesView(Model model) {
