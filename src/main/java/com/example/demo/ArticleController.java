@@ -11,7 +11,12 @@ import java.util.*;
 @Controller
 public class ArticleController {
 
-    private ArticleService articleService;
+    private final ArticleService articleService;
+
+    // 이 생성자만 추가하면 됨 (@Autowired 생략 가능)
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     @GetMapping("/posts")
     public String getArticlesView(Model model) {
