@@ -3,7 +3,6 @@ package com.example.demo;
 import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,17 +13,12 @@ import java.util.*;
 @Controller
 public class ArticleController {
 
-    HashMap<Long, Article> articles = new HashMap<>();
-    HashMap<Long, Member> members = new HashMap<>();
-    ArrayList<ArticleBoard> articleBoards = new ArrayList<>();
+    private MembersRepository membersRepository;
 
     @PostConstruct
     public void setDefault() {
         articleBoards.add(new ArticleBoard("자유게시판"));
 
-        members.put(1L, new Member("회원1", "member1@gmail.com", "1111"));
-        members.put(2L, new Member("회원2", "member2@gmail.com", "2222"));
-        members.put(3L, new Member("회원3", "member3@gmail.com", "3333"));
     }
 
     @GetMapping("/posts")
@@ -32,7 +26,7 @@ public class ArticleController {
         String boardTitle = articleBoards.get(0).getBoardName();
         model.addAttribute("boardTitle", boardTitle);
         model.addAttribute("articles", articles);
-        model.addAttribute("members", members);
+        model.addAttribute("members", membersRepository.findAll());
         return "articles";
     }
 
