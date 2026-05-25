@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,18 +13,14 @@ import java.util.*;
 public class ArticleController {
 
     private MembersRepository membersRepository;
-
-    @PostConstruct
-    public void setDefault() {
-        articleBoards.add(new ArticleBoard("자유게시판"));
-
-    }
+    private ArticleRepository articleRepository;
+    private BoardRepository boardRepository;
 
     @GetMapping("/posts")
     public String getArticlesView(Model model) {
-        String boardTitle = articleBoards.get(0).getBoardName();
+        String boardTitle = boardRepository.findAll().get(0).getBoardName();
         model.addAttribute("boardTitle", boardTitle);
-        model.addAttribute("articles", articles);
+        model.addAttribute("articles", articleRepository.findAll());
         model.addAttribute("members", membersRepository.findAll());
         return "articles";
     }
@@ -33,16 +28,16 @@ public class ArticleController {
     @ResponseBody
     @GetMapping("/articles")
     public HashMap<Long, Article> getArticles() {
-        return articles;
+        return articleRepository.findAll();
     }
 
     @ResponseBody
     @GetMapping("/article/{id}")
     public ResponseEntity<?> getArticle(@PathVariable Long id) {
-        if (!articles.containsKey(id)) {
+        if (!articleRepository.findAll().containsKey(id)) {
             return ResponseEntity.status(404).body("존재하지 않는 게시물입니다.");
         }
-        return ResponseEntity.ok(articles.get(id));
+        return ResponseEntity.ok(articleRepository.findAll().get(id));
     }
 
     @ResponseBody
@@ -55,18 +50,18 @@ public class ArticleController {
     @ResponseBody
     @DeleteMapping("/article/{id}")
     public String deleteArticle(@PathVariable Long id) {
-        articles.remove(id);
+        articleRepository.findAll().remove(id);
         return "삭제 완료";
     }
 
     @ResponseBody
     @PutMapping("/article/{id}")
     public String updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
-        Article modifiedArticle = articles.get(id);
+        Article modifiedArticle = articleRepository.findAll().get(id);
         modifiedArticle.setTitle(updatedArticle.getTitle());
         modifiedArticle.setDescription(updatedArticle.getDescription());
         modifiedArticle.setLastModifiedTime(LocalDateTime.now());
-        articles.put(id, modifiedArticle);
+        articleRepository.findAll().put(id, modifiedArticle);
         return "수정 완료";
     }
 }

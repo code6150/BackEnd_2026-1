@@ -4,17 +4,14 @@ import java.util.ArrayList;
 
 public class BoardRepository {
 
-    private ArrayList<ArticleBoard> articleBoards = new ArrayList<>();
+    private final ArrayList<ArticleBoard> articleBoards = new ArrayList<>();
+
+    public BoardRepository() {
+        this.articleBoards.add(new ArticleBoard("자유게시판"));
+    }
 
     public ArrayList<ArticleBoard> findAll() {
         return articleBoards;
     }
 
-    public void putBoard() {
-
-    }
-
-    public void deleteBoard() {
-
-    }
 }

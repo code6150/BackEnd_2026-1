@@ -9,4 +9,8 @@ public class ArticleRepository {
 
     private HashMap<Long, Article> articles = new HashMap<>();
 
+    public HashMap<Long, Article> findAll() {
+        return articles;
+    }
+
 }
