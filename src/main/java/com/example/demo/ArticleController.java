@@ -3,18 +3,16 @@ package com.example.demo;
 import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
+
 
 @Controller
 public class ArticleController {
-
-    Random random = new Random();
 
     HashMap<Long, Article> articles = new HashMap<>();
     HashMap<Long, Member> members = new HashMap<>();
@@ -56,10 +54,7 @@ public class ArticleController {
     @ResponseBody
     @PostMapping("/article")
     public String createArticle(@RequestParam String title, @RequestParam String description) {
-        Long authorId = members.get(random.nextLong(members.size())).getId();
-        Long boardId = articleBoards.get(0).getId();
-        Article newArticle = new Article(title, description, authorId, boardId);
-        articles.put(newArticle.getId(), newArticle);
+
         return "생성 완료";
     }
 
