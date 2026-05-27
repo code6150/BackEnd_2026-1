@@ -12,9 +12,11 @@ import java.util.*;
 public class ArticleController {
 
     private final ArticleService articleService;
+    private final MemberService memberService;
 
-    public ArticleController(ArticleService articleService) {
+    public ArticleController(ArticleService articleService, MemberService memberService) {
         this.articleService = articleService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/posts")
@@ -22,7 +24,7 @@ public class ArticleController {
         String boardTitle = articleService.getBoards().get(0).getBoardName();
         model.addAttribute("boardTitle", boardTitle);
         model.addAttribute("articles", articleService.getArticle());
-        model.addAttribute("members", articleService.getMembers());
+        model.addAttribute("members", memberService.getMembers());
         return "articles";
     }
 

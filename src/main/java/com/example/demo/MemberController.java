@@ -9,16 +9,16 @@ import java.util.HashMap;
 @Controller
 public class MemberController {
 
-    private final MembersRepository membersRepository;
+    private final MemberService memberService;
 
-    public MemberController(MembersRepository membersRepository) {
-        this.membersRepository = membersRepository;
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
     }
 
     @ResponseBody
     @GetMapping("/members")
-    public HashMap<Long, Article> getArticles() {
-        return articleService.getArticle();
+    public HashMap<Long, Member> getArticles() {
+        return memberService.getMembers();
     }
 
     @ResponseBody
