@@ -31,7 +31,7 @@ public class MemberController {
     }
 
     @ResponseBody
-    @PostMapping("/article")
+    @PostMapping("/members")
     public String createArticle(
             @RequestParam String nickName,
             @RequestParam String email,
@@ -42,16 +42,16 @@ public class MemberController {
     }
 
     @ResponseBody
-    @DeleteMapping("/article/{id}")
+    @DeleteMapping("/members/{id}")
     public String deleteArticle(@PathVariable Long id) {
         memberService.deleteArticle(id);
         return "삭제 완료";
     }
 
     @ResponseBody
-    @PutMapping("/article/{id}")
-    public String updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
-        articleService.updateArticle(id, updatedArticle);
+    @PutMapping("/members/{id}")
+    public String updateArticle(@PathVariable Long id, @RequestBody Member updatedMember) {
+        memberService.updateMember(id, updatedMember);
         return "수정 완료";
     }
 

@@ -11,9 +11,9 @@ public class Member {
     private static Long followingId= 1L;
 
     private final Long id;
-    private final String nickName;
-    private final String emailAddress;
-    private final String passWord;
+    private String nickName;
+    private String emailAddress;
+    private String passWord;
 
     public Long getId() {
         return id;
@@ -30,4 +30,11 @@ public class Member {
     public String getPassWord() {
         return passWord;
     }
+
+    public void modifyMember(String modifiedNickName, String modifiedEmail, String modifiedPassWord) {
+        nickName = modifiedNickName;
+        emailAddress = modifiedEmail;
+        passWord = modifiedPassWord;
+    }
+
 }

@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 @Service
@@ -15,6 +16,16 @@ public class MemberService {
 
     public HashMap<Long, Member> getMembers() {
         return members.findAll();
+    }
+
+    public void updateMember(Long id, Member updatedMember) {
+        Member modifiedMember = members.findAll().get(id);
+        modifiedMember.modifyMember(
+                updatedMember.getNickName(),
+                updatedMember.getEmailAddress(),
+                updatedMember.getPassWord()
+        );
+        members.findAll().put(id, modifiedMember);
     }
 
     public void creatMember(String nickName, String email, String passWord) {
