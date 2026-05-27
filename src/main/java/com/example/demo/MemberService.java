@@ -22,4 +22,7 @@ public class MemberService {
         members.findAll().put(newMember.getId(), newMember);
     }
 
+    public void deleteArticle(Long id) {
+        members.findAll().remove(id);
+    }
 }
