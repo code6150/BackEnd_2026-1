@@ -22,12 +22,12 @@ public class MemberController {
     }
 
     @ResponseBody
-    @GetMapping("/article/{id}")
+    @GetMapping("/members/{id}")
     public ResponseEntity<?> getArticle(@PathVariable Long id) {
-        if (!articleService.getArticle().containsKey(id)) {
-            return ResponseEntity.status(404).body("존재하지 않는 게시물입니다.");
+        if (!memberService.getMembers().containsKey(id)) {
+            return ResponseEntity.status(404).body("존재하지 않는 회원입니다.");
         }
-        return ResponseEntity.ok(articleService.getArticle().get(id));
+        return ResponseEntity.ok(memberService.getMembers().get(id));
     }
 
     @ResponseBody
