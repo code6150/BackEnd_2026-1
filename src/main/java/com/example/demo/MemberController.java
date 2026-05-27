@@ -32,8 +32,12 @@ public class MemberController {
 
     @ResponseBody
     @PostMapping("/article")
-    public String createArticle(@RequestParam String title, @RequestParam String description) {
-        articleService.creatArticle(title, description);
+    public String createArticle(
+            @RequestParam String nickName,
+            @RequestParam String email,
+            @RequestParam String passWord
+    ) {
+        memberService.creatMember(nickName, email, passWord);
         return "생성 완료";
     }
 

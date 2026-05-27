@@ -17,4 +17,9 @@ public class MemberService {
         return members.findAll();
     }
 
+    public void creatMember(String nickName, String email, String passWord) {
+        Member newMember = new Member(nickName, email, passWord);
+        members.findAll().put(newMember.getId(), newMember);
+    }
+
 }

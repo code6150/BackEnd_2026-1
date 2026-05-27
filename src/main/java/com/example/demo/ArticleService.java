@@ -30,8 +30,6 @@ public class ArticleService {
         return articles.findAll();
     }
 
-
-
     public ArrayList<ArticleBoard> getBoards() {
         return boardRepository.findAll();
     }
