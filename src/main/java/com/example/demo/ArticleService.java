@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,12 +10,20 @@ public class ArticleService {
 
     Random random = new Random();
 
-    @Autowired
-    private ArticleRepository articles;
-    @Autowired
-    private MembersRepository members;
-    @Autowired
-    private BoardRepository boardRepository;
+    private final ArticleRepository articles;
+    private final MembersRepository members;
+    private final BoardRepository boardRepository;
+
+    public ArticleService(
+            ArticleRepository articleRepository,
+            MembersRepository membersRepository,
+            BoardRepository boardRepository
+            ) {
+        this.articles = articleRepository;
+        this.members = membersRepository;
+        this.boardRepository = boardRepository;
+
+    }
 
 
     public HashMap<Long,Article> getArticle() {
