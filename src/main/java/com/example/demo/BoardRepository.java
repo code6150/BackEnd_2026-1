@@ -2,18 +2,17 @@ package com.example.demo;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 @Repository
 public class BoardRepository {
 
-    private final ArrayList<ArticleBoard> articleBoards = new ArrayList<>();
-
+    private final HashMap<Long, ArticleBoard> articleBoards = new HashMap<>();
     public BoardRepository() {
-        this.articleBoards.add(new ArticleBoard("자유게시판"));
+        this.articleBoards.put(1L, new ArticleBoard("자유게시판"));
     }
 
-    public ArrayList<ArticleBoard> findAll() {
+    public HashMap<Long,ArticleBoard> findAll() {
         return articleBoards;
     }
 

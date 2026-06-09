@@ -5,7 +5,7 @@ public class ArticleBoard {
     private static Long followingId = 1L;
 
     private final Long id;
-    private final String boardName;
+    private String boardName;
 
     public ArticleBoard(String boardName) {
         this.id = followingId++;
@@ -18,5 +18,9 @@ public class ArticleBoard {
 
     public String getBoardName() {
         return boardName;
+    }
+
+    public void modifyBoard(String modifiedBoardName) {
+        boardName = modifiedBoardName;
     }
 }

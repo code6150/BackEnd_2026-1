@@ -2,7 +2,6 @@ package com.example.demo;
 
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 
 @Service
@@ -33,7 +32,7 @@ public class MemberService {
         members.findAll().put(newMember.getId(), newMember);
     }
 
-    public void deleteArticle(Long id) {
+    public void deleteMember(Long id) {
         members.findAll().remove(id);
     }
 }

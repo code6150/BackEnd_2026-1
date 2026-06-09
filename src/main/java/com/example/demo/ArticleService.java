@@ -30,7 +30,7 @@ public class ArticleService {
         return articles.findAll();
     }
 
-    public ArrayList<ArticleBoard> getBoards() {
+    public HashMap<Long,ArticleBoard> getBoards() {
         return boardRepository.findAll();
     }
 
