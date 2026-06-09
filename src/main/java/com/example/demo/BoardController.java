@@ -11,39 +11,50 @@ import java.util.HashMap;
 public class BoardController {
 
 
+    private final BoardService boardService;
+
+    public BoardController(BoardService boardService) {
+        this.boardService = boardService;
+    }
+
+    //모든게시판 조회
     @ResponseBody
     @GetMapping("/boards")
-    public HashMap<Long, Article> getArticles() {
-        return BoardService.getBoard();
+    public HashMap<Long, ArticleBoard> getBoards() {
+        return boardService.getBoards();
     }
 
+    //특정게시판 조회
     @ResponseBody
-    @GetMapping("/article/{id}")
+    @GetMapping("/boards/{id}")
     public ResponseEntity<?> getArticle(@PathVariable Long id) {
-        if (!articleService.getArticle().containsKey(id)) {
+        if (!boardService.getBoards().containsKey(id)) {
             return ResponseEntity.status(404).body("존재하지 않는 게시물입니다.");
         }
-        return ResponseEntity.ok(articleService.getArticle().get(id));
+        return ResponseEntity.ok(boardService.getBoards().get(id));
     }
 
+    //게시판 추가
     @ResponseBody
-    @PostMapping("/article")
-    public String createArticle(@RequestParam String title, @RequestParam String description) {
-        articleService.creatArticle(title, description);
+    @PostMapping("/boards")
+    public String createArticle(@RequestParam String boardName) {
+        boardService.creatBoard(boardName);
         return "생성 완료";
     }
 
+    //게시판 삭제
     @ResponseBody
-    @DeleteMapping("/article/{id}")
-    public String deleteArticle(@PathVariable Long id) {
-        articleService.deleteArticle(id);
+    @DeleteMapping("/boards/{id}")
+    public String deleteBoard(@PathVariable Long id) {
+        boardService.deleteBoard(id);
         return "삭제 완료";
     }
 
+    //게시판 수정
     @ResponseBody
-    @PutMapping("/article/{id}")
-    public String updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
-        articleService.updateArticle(id, updatedArticle);
+    @PutMapping("/boards/{id}")
+    public String updateBoard(@PathVariable Long id, @RequestBody ArticleBoard updatedBoard) {
+        boardService.updateBoard(id, updatedBoard);
         return "수정 완료";
     }
 

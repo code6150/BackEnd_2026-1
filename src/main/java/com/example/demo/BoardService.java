@@ -13,11 +13,11 @@ public class BoardService {
         this.boards = boardRepository;
     }
 
-    public HashMap<Long, ArticleBoard> getMembers() {
+    public HashMap<Long, ArticleBoard> getBoards() {
         return boards.findAll();
     }
 
-    public void updateMember(Long id, ArticleBoard updatedBoard) {
+    public void updateBoard(Long id, ArticleBoard updatedBoard) {
         ArticleBoard modifiedBoard = boards.findAll().get(id);
         modifiedBoard.modifyBoard(
                 updatedBoard.getBoardName()
