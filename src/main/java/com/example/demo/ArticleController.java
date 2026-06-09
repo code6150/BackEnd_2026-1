@@ -13,17 +13,19 @@ public class ArticleController {
 
     private final ArticleService articleService;
     private final MemberService memberService;
+    private final BoardService boardService;
 
-    public ArticleController(ArticleService articleService, MemberService memberService) {
+    public ArticleController(ArticleService articleService, MemberService memberService, BoardService boardService) {
         this.articleService = articleService;
         this.memberService = memberService;
+        this.boardService = boardService;
     }
 
     @GetMapping("/posts")
     public String getArticlesView(Model model) {
         String boardTitle = articleService.getBoards().get(0).getBoardName();
         model.addAttribute("boardTitle", boardTitle);
-        model.addAttribute("articles", articleService.getArticle());
+        model.addAttribute("articles", articleService.getArticles());
         model.addAttribute("members", memberService.getMembers());
         return "articles";
     }
@@ -31,16 +33,25 @@ public class ArticleController {
     @ResponseBody
     @GetMapping("/articles")
     public HashMap<Long, Article> getArticles() {
-        return articleService.getArticle();
+        return articleService.getArticles();
     }
 
     @ResponseBody
     @GetMapping("/article/{id}")
     public ResponseEntity<?> getArticle(@PathVariable Long id) {
-        if (!articleService.getArticle().containsKey(id)) {
+        if (!articleService.getArticles().containsKey(id)) {
             return ResponseEntity.status(404).body("존재하지 않는 게시물입니다.");
         }
-        return ResponseEntity.ok(articleService.getArticle().get(id));
+        return ResponseEntity.ok(articleService.getArticles().get(id));
+    }
+
+    @ResponseBody
+    @GetMapping("article")
+    public ResponseEntity<?> getArticleInBoard(@RequestParam Long boardId) {
+        if (!boardService.getBoards().containsKey(boardId)) {
+            return ResponseEntity.status(404).body("존재하지 않는 게시판입니다.");
+        }
+        return ResponseEntity.ok(articleService.getArticles());
     }
 
     @ResponseBody

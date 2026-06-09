@@ -26,7 +26,7 @@ public class ArticleService {
     }
 
 
-    public HashMap<Long,Article> getArticle() {
+    public HashMap<Long,Article> getArticles() {
         return articles.findAll();
     }
 
