@@ -44,7 +44,7 @@ public class MemberController {
     @ResponseBody
     @DeleteMapping("/members/{id}")
     public String deleteArticle(@PathVariable Long id) {
-        memberService.deleteArticle(id);
+        memberService.deleteMember(id);
         return "삭제 완료";
     }
 
