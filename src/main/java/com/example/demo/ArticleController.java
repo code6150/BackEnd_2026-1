@@ -23,7 +23,7 @@ public class ArticleController {
 
     @GetMapping("/posts")
     public String getArticlesView(Model model) {
-        String boardTitle = articleService.getBoards().get(0).getBoardName();
+        String boardTitle = articleService.getBoards().get(1L).getBoardName();
         model.addAttribute("boardTitle", boardTitle);
         model.addAttribute("articles", articleService.getArticles());
         model.addAttribute("members", memberService.getMembers());
@@ -46,7 +46,7 @@ public class ArticleController {
     }
 
     @ResponseBody
-    @GetMapping("article")
+    @GetMapping("articles")
     public ResponseEntity<?> getArticleInBoard(@RequestParam Long boardId) {
         if (!boardService.getBoards().containsKey(boardId)) {
             return ResponseEntity.status(404).body("존재하지 않는 게시판입니다.");

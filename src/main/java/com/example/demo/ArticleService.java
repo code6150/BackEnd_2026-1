@@ -44,7 +44,7 @@ public class ArticleService {
 
     public void creatArticle(String title, String description) {
         Long authorId = members.findById(random.nextLong(members.findAll().size())).getId();
-        Long boardId = boardRepository.findAll().get(0).getId();
+        Long boardId = boardRepository.findAll().get(1L).getId();
         Article newArticle = new Article(title, description, authorId, boardId);
         articles.findAll().put(newArticle.getId(), newArticle);
     }
