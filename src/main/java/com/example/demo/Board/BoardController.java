@@ -28,7 +28,7 @@ public class BoardController {
     @GetMapping("/boards/{id}")
     public ResponseEntity<?> getArticle(@PathVariable Long id) {
         if (!boardService.getBoards().containsKey(id)) {
-            return ResponseEntity.status(404).body("존재하지 않는 게시물입니다.");
+            return ResponseEntity.status(404).body("존재하지 않는 게시판입니다.");
         }
         return ResponseEntity.ok(boardService.getBoards().get(id));
     }

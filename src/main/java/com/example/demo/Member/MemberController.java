@@ -10,9 +10,11 @@ import java.util.HashMap;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, MemberRepository memberRepository) {
         this.memberService = memberService;
+        this.memberRepository = memberRepository;
     }
 
     @ResponseBody
@@ -50,9 +52,12 @@ public class MemberController {
 
     @ResponseBody
     @PutMapping("/members/{id}")
-    public String updateArticle(@PathVariable Long id, @RequestBody Member updatedMember) {
+    public ResponseEntity<?> updateArticle(@PathVariable Long id, @RequestBody Member updatedMember) {
+
+        if (memberRepository.findAll().containsKey(updatedMember.getEmailAddress())) {
+            return ResponseEntity.status(404).body("존재하지 않는 게시판입니다.");
+        }
         memberService.updateMember(id, updatedMember);
-        return "수정 완료";
     }
 
 }

@@ -22,4 +22,13 @@ public class MemberRepository {
         return members.get(id);
     }
 
+    public boolean existsByEmailAddress(String emailAddress) {
+        for (Member member : members.values()) {
+            if (member.getEmailAddress().equals(emailAddress)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
