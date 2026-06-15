@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Board;
 
 import org.springframework.stereotype.Service;
 
@@ -13,12 +13,12 @@ public class BoardService {
         this.boards = boardRepository;
     }
 
-    public HashMap<Long, ArticleBoard> getBoards() {
+    public HashMap<Long, Board> getBoards() {
         return boards.findAll();
     }
 
-    public void updateBoard(Long id, ArticleBoard updatedBoard) {
-        ArticleBoard modifiedBoard = boards.findAll().get(id);
+    public void updateBoard(Long id, Board updatedBoard) {
+        Board modifiedBoard = boards.findAll().get(id);
         modifiedBoard.modifyBoard(
                 updatedBoard.getBoardName()
         );
@@ -26,7 +26,7 @@ public class BoardService {
     }
 
     public void creatBoard(String boardName) {
-        ArticleBoard newBoard = new ArticleBoard(boardName);
+        Board newBoard = new Board(boardName);
         boards.findAll().put(newBoard.getId(), newBoard);
     }
 

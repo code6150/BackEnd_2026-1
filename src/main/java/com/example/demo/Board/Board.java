@@ -1,13 +1,13 @@
-package com.example.demo;
+package com.example.demo.Board;
 
-public class ArticleBoard {
+public class Board {
 
     private static Long followingId = 1L;
 
     private final Long id;
     private String boardName;
 
-    public ArticleBoard(String boardName) {
+    public Board(String boardName) {
         this.id = followingId++;
         this.boardName = boardName;
     }

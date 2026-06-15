@@ -1,5 +1,7 @@
-package com.example.demo;
+package com.example.demo.Article;
 
+import com.example.demo.Board.BoardService;
+import com.example.demo.Member.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

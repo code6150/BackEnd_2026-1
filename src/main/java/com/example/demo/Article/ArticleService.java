@@ -1,5 +1,8 @@
-package com.example.demo;
+package com.example.demo.Article;
 
+import com.example.demo.Board.Board;
+import com.example.demo.Board.BoardRepository;
+import com.example.demo.Member.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,12 +14,12 @@ public class ArticleService {
     Random random = new Random();
 
     private final ArticleRepository articles;
-    private final MembersRepository members;
+    private final MemberRepository members;
     private final BoardRepository boardRepository;
 
     public ArticleService(
             ArticleRepository articleRepository,
-            MembersRepository membersRepository,
+            MemberRepository membersRepository,
             BoardRepository boardRepository
             ) {
         this.articles = articleRepository;
@@ -26,11 +29,11 @@ public class ArticleService {
     }
 
 
-    public HashMap<Long,Article> getArticles() {
+    public HashMap<Long, Article> getArticles() {
         return articles.findAll();
     }
 
-    public HashMap<Long,ArticleBoard> getBoards() {
+    public HashMap<Long, Board> getBoards() {
         return boardRepository.findAll();
     }
 

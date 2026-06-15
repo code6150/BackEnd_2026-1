@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Member;
 
 public class Member {
     public Member(String nickName, String email, String passWord) {

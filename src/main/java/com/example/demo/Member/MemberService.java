@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Member;
 
 import org.springframework.stereotype.Service;
 
@@ -7,9 +7,9 @@ import java.util.HashMap;
 @Service
 public class MemberService {
 
-    private final MembersRepository members;
+    private final MemberRepository members;
 
-    public MemberService(MembersRepository membersRepository) {
+    public MemberService(MemberRepository membersRepository) {
         this.members = membersRepository;
     }
 

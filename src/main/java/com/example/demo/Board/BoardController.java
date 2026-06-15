@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Board;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ public class BoardController {
     //모든게시판 조회
     @ResponseBody
     @GetMapping("/boards")
-    public HashMap<Long, ArticleBoard> getBoards() {
+    public HashMap<Long, Board> getBoards() {
         return boardService.getBoards();
     }
 
@@ -52,7 +52,7 @@ public class BoardController {
     //게시판 수정
     @ResponseBody
     @PutMapping("/boards/{id}")
-    public String updateBoard(@PathVariable Long id, @RequestBody ArticleBoard updatedBoard) {
+    public String updateBoard(@PathVariable Long id, @RequestBody Board updatedBoard) {
         boardService.updateBoard(id, updatedBoard);
         return "수정 완료";
     }
