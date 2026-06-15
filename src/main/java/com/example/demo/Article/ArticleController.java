@@ -2,6 +2,7 @@ package com.example.demo.Article;
 
 import com.example.demo.Board.BoardService;
 import com.example.demo.Member.MemberService;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,8 +56,10 @@ public class ArticleController {
 
     @ResponseBody
     @PostMapping("/article")
-    public ResponseEntity<?> createArticle(@RequestParam String title, @RequestParam String description) {
-        articleService.creatArticle(title, description);
+    public ResponseEntity<?> createArticle(@RequestParam String title,@RequestParam String description) {
+        if (title == null || description == null) {
+            return ResponseEntity.status(400).body("조건을 충족하지 못한 요청입니다.");
+        }
         //현재 게시글 생성할때 랜덤한 회원과 게시판을 불러오는 관계로 주석으로만 구현해놓겠습니다..
 //        if (!memberService.getMembers().containsKey(memberId)) {
 //            return ResponseEntity.status(400).body("게시글을 작성한 회원이 없습니다;;");
@@ -64,6 +67,7 @@ public class ArticleController {
 //        if (!boardService.getBoards().containsKey(boardId)) {
 //            return ResponseEntity.status(400).body("현재 존재하지 않는 게시판입니다.");
 //        }
+        articleService.creatArticle(title, description);
         return ResponseEntity.ok("생성 완료");
     }
 
