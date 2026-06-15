@@ -55,4 +55,8 @@ public class ArticleService {
     public void deleteArticle(Long id) {
         articles.findAll().remove(id);
     }
+
+    public HashMap<Long, Article> getArticlesByBoardId(Long boardId) {
+        return articles.findByBoardID(boardId);
+    }
 }

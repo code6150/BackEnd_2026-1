@@ -33,12 +33,6 @@ public class ArticleController {
     }
 
     @ResponseBody
-    @GetMapping("/articles")
-    public HashMap<Long, Article> getArticles() {
-        return articleService.getArticles();
-    }
-
-    @ResponseBody
     @GetMapping("/article/{id}")
     public ResponseEntity<?> getArticle(@PathVariable Long id) {
         if (!articleService.getArticles().containsKey(id)) {
@@ -49,11 +43,14 @@ public class ArticleController {
 
     @ResponseBody
     @GetMapping("articles")
-    public ResponseEntity<?> getArticleInBoard(@RequestParam Long boardId) {
+    public ResponseEntity<?> getArticleInBoard(@RequestParam(required = false) Long boardId) {
+        if (boardId == null) {
+            return ResponseEntity.ok(articleService.getArticles());
+        }
         if (!boardService.getBoards().containsKey(boardId)) {
             return ResponseEntity.status(404).body("존재하지 않는 게시판입니다.");
         }
-        return ResponseEntity.ok(articleService.getArticles());
+        return ResponseEntity.ok(articleService.getArticlesByBoardId(boardId));
     }
 
     @ResponseBody
