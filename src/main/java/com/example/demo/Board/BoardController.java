@@ -11,9 +11,11 @@ public class BoardController {
 
 
     private final BoardService boardService;
+    private final BoardRepository boardRepository;
 
-    public BoardController(BoardService boardService) {
+    public BoardController(BoardService boardService, BoardRepository boardRepository) {
         this.boardService = boardService;
+        this.boardRepository = boardRepository;
     }
 
     //모든게시판 조회
@@ -44,9 +46,12 @@ public class BoardController {
     //게시판 삭제
     @ResponseBody
     @DeleteMapping("/boards/{id}")
-    public String deleteBoard(@PathVariable Long id) {
+    public ResponseEntity<?> deleteBoard(@PathVariable Long id) {
+        if (!boardRepository.findAll().isEmpty()) {
+            return ResponseEntity.status(400).body("게시판에 개시글이 있습니다! (어딜!)");
+        }
         boardService.deleteBoard(id);
-        return "삭제 완료";
+        return ResponseEntity.ok("삭제완료");
     }
 
     //게시판 수정

@@ -54,10 +54,11 @@ public class MemberController {
     @PutMapping("/members/{id}")
     public ResponseEntity<?> updateArticle(@PathVariable Long id, @RequestBody Member updatedMember) {
 
-        if (memberRepository.findAll().containsKey(updatedMember.getEmailAddress())) {
-            return ResponseEntity.status(404).body("존재하지 않는 게시판입니다.");
+        if (memberRepository.existsByEmailAddress(updatedMember.getEmailAddress())) {
+            return ResponseEntity.status(409).body("이미 존재하는 이메일 입니다.");
         }
         memberService.updateMember(id, updatedMember);
+        return ResponseEntity.ok("수정 완료");
     }
 
 }
