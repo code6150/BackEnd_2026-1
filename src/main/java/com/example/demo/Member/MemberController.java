@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class MemberController {
@@ -19,17 +20,17 @@ public class MemberController {
 
     @ResponseBody
     @GetMapping("/members")
-    public HashMap<Long, Member> getArticles() {
+    public List<Member> getArticles() {
         return memberService.getMembers();
     }
 
     @ResponseBody
     @GetMapping("/members/{id}")
     public ResponseEntity<?> getArticle(@PathVariable Long id) {
-        if (!memberService.getMembers().containsKey(id)) {
+        if (memberService.getMember(id) != null) {
             return ResponseEntity.status(404).body("존재하지 않는 회원입니다.");
         }
-        return ResponseEntity.ok(memberService.getMembers().get(id));
+        return ResponseEntity.ok(memberService.getMember(id));
     }
 
     @ResponseBody

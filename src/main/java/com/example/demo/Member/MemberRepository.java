@@ -46,6 +46,16 @@ public class MemberRepository {
         );
     }
 
+    public void delete(Long id) {
+
+        String sql = """
+            DELETE FROM member
+            WHERE id = ?
+            """;
+
+        jdbcTemplate.update(sql, id);
+    }
+
     public List<Member> findAll() {
 
         String sql = "SELECT * FROM member";

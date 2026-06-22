@@ -81,7 +81,7 @@ public class ArticleController {
     @PutMapping("/article/{id}")
     public ResponseEntity<?> updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
 
-        if (!memberService.getMembers().containsKey(updatedArticle.getMemberId())) {
+        if (memberService.getMember(updatedArticle.getMemberId()) != null) {
             return ResponseEntity.status(400).body("게시글을 작성한 회원이 없습니다;;");
         }
         if (!boardService.getBoards().containsKey(updatedArticle.getBoardId())) {
