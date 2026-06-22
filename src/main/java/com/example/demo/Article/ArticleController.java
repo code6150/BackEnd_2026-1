@@ -35,7 +35,7 @@ public class ArticleController {
     @ResponseBody
     @GetMapping("/article/{id}")
     public ResponseEntity<?> getArticle(@PathVariable Long id) {
-        if (!articleService.getArticles().containsKey(id)) {
+        if (articleService.getArticle(id) == null) {
             return ResponseEntity.status(404).body("존재하지 않는 게시물입니다.");
         }
         return ResponseEntity.ok(articleService.getArticles().get(id));
