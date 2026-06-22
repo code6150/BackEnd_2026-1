@@ -1,8 +1,9 @@
 package com.example.demo.Board;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class BoardService {
@@ -13,25 +14,36 @@ public class BoardService {
         this.boards = boardRepository;
     }
 
-    public HashMap<Long, Board> getBoards() {
+    @Transactional(readOnly = true)
+    public List<Board> getBoards() {
         return boards.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public Board getBoard(Long id) {
+        return boards.findById(id);
+    }
+
+    @Transactional
+    public void createBoard(String boardName) {
+        Board board = new Board(boardName);
+        boards.save(board);
+    }
+
+    @Transactional
     public void updateBoard(Long id, Board updatedBoard) {
-        Board modifiedBoard = boards.findAll().get(id);
-        modifiedBoard.modifyBoard(
+
+        Board board = boards.findById(id);
+
+        board.modifyBoard(
                 updatedBoard.getBoardName()
         );
-        boards.findAll().put(id, modifiedBoard);
+
+        boards.update(board);
     }
 
-    public void creatBoard(String boardName) {
-        Board newBoard = new Board(boardName);
-        boards.findAll().put(newBoard.getId(), newBoard);
-    }
-
+    @Transactional
     public void deleteBoard(Long id) {
-        boards.findAll().remove(id);
+        boards.delete(id);
     }
-
 }

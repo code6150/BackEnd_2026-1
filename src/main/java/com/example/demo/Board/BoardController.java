@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class BoardController {
@@ -22,7 +23,7 @@ public class BoardController {
     //모든게시판 조회
     @ResponseBody
     @GetMapping("/boards")
-    public HashMap<Long, Board> getBoards() {
+    public List<Board> getBoards() {
         return boardService.getBoards();
     }
 
@@ -30,10 +31,10 @@ public class BoardController {
     @ResponseBody
     @GetMapping("/boards/{id}")
     public ResponseEntity<?> getArticle(@PathVariable Long id) {
-        if (!boardService.getBoards().containsKey(id)) {
+        if (boardService.getBoard(id) == null) {
             return ResponseEntity.status(404).body("존재하지 않는 게시판입니다.");
         }
-        return ResponseEntity.ok(boardService.getBoards().get(id));
+        return ResponseEntity.ok(boardService.getBoard(id));
     }
 
     //게시판 추가
@@ -43,7 +44,7 @@ public class BoardController {
         if (boardName == null) {
             return ResponseEntity.status(400).body("조건을 충족하지 못한 요청입니다.");
         }
-        boardService.creatBoard(boardName);
+        boardService.createBoard(boardName);
         return ResponseEntity.ok("생성 완료");
     }
 

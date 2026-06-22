@@ -27,7 +27,7 @@ public class MemberController {
     @ResponseBody
     @GetMapping("/members/{id}")
     public ResponseEntity<?> getArticle(@PathVariable Long id) {
-        if (memberService.getMember(id) != null) {
+        if (memberService.getMember(id) == null) {
             return ResponseEntity.status(404).body("존재하지 않는 회원입니다.");
         }
         return ResponseEntity.ok(memberService.getMember(id));

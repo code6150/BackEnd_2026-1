@@ -33,7 +33,7 @@ public class ArticleService {
         return articles.findAll();
     }
 
-    public HashMap<Long, Board> getBoards() {
+    public List<Board> getBoards() {
         return boardRepository.findAll();
     }
 
@@ -45,10 +45,8 @@ public class ArticleService {
         articles.findAll().put(id, modifiedArticle);
     }
 
-    public void creatArticle(String title, String description) {
-        Long authorId = members.findById(random.nextLong(members.findAll().size())).getId();
-        Long boardId = boardRepository.findAll().get(1L).getId();
-        Article newArticle = new Article(title, description, authorId, boardId);
+    public void creatArticle(Long boardId, Long memberId, String title, String description) {
+        Article newArticle = new Article(title, description, memberId, boardId);
         articles.findAll().put(newArticle.getId(), newArticle);
     }
 

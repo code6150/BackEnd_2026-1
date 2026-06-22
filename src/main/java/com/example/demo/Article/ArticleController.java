@@ -25,7 +25,7 @@ public class ArticleController {
 
     @GetMapping("/posts")
     public String getArticlesView(@RequestParam Long boardId, Model model) {
-        String boardTitle = articleService.getBoards().get(boardId).getBoardName();
+        String boardTitle = boardService.getBoard(boardId).getBoardName();
         model.addAttribute("boardTitle", boardTitle);
         model.addAttribute("articles", articleService.getArticles());
         model.addAttribute("members", memberService.getMembers());
@@ -47,7 +47,7 @@ public class ArticleController {
         if (boardId == null) {
             return ResponseEntity.ok(articleService.getArticles());
         }
-        if (!boardService.getBoards().containsKey(boardId)) {
+        if (boardService.getBoard(boardId) == null) {
             return ResponseEntity.status(404).body("존재하지 않는 게시판입니다.");
         }
         return ResponseEntity.ok(articleService.getArticlesByBoardId(boardId));
@@ -55,18 +55,17 @@ public class ArticleController {
 
     @ResponseBody
     @PostMapping("/article")
-    public ResponseEntity<?> createArticle(@RequestParam String title,@RequestParam String description) {
+    public ResponseEntity<?> createArticle(@RequestParam Long boardId, @RequestParam Long memberId, @RequestParam String title,@RequestParam String description) {
         if (title == null || description == null) {
             return ResponseEntity.status(400).body("조건을 충족하지 못한 요청입니다.");
         }
-        //현재 게시글 생성할때 랜덤한 회원과 게시판을 불러오는 관계로 주석으로만 구현해놓겠습니다..
-//        if (!memberService.getMembers().containsKey(memberId)) {
-//            return ResponseEntity.status(400).body("게시글을 작성한 회원이 없습니다;;");
-//        }
-//        if (!boardService.getBoards().containsKey(boardId)) {
-//            return ResponseEntity.status(400).body("현재 존재하지 않는 게시판입니다.");
-//        }
-        articleService.creatArticle(title, description);
+        if (memberService.getMember(memberId) == null) {
+            return ResponseEntity.status(400).body("게시글을 작성한 회원이 없습니다;;");
+        }
+        if (boardService.getBoard(boardId) == null) {
+            return ResponseEntity.status(400).body("현재 존재하지 않는 게시판입니다.");
+        }
+        articleService.creatArticle(boardId, memberId,title, description);
         return ResponseEntity.ok("생성 완료");
     }
 
@@ -81,10 +80,10 @@ public class ArticleController {
     @PutMapping("/article/{id}")
     public ResponseEntity<?> updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
 
-        if (memberService.getMember(updatedArticle.getMemberId()) != null) {
+        if (memberService.getMember(updatedArticle.getMemberId()) == null) {
             return ResponseEntity.status(400).body("게시글을 작성한 회원이 없습니다;;");
         }
-        if (!boardService.getBoards().containsKey(updatedArticle.getBoardId())) {
+        if (boardService.getBoard(updatedArticle.getBoardId()) == null) {
             return ResponseEntity.status(400).body("현재 존재하지 않는 게시판입니다.");
         }
         articleService.updateArticle(id, updatedArticle);
