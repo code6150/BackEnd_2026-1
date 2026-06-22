@@ -4,18 +4,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
 public class MemberController {
 
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
 
-    public MemberController(MemberService memberService, MemberRepository memberRepository) {
+    public MemberController(MemberService memberService) {
         this.memberService = memberService;
-        this.memberRepository = memberRepository;
     }
 
     @ResponseBody
@@ -58,7 +55,7 @@ public class MemberController {
     @PutMapping("/members/{id}")
     public ResponseEntity<?> updateArticle(@PathVariable Long id, @RequestBody Member updatedMember) {
 
-        if (memberRepository.existsByEmailAddress(updatedMember.getEmailAddress())) {
+        if (memberService.existsByEmailAddress(updatedMember.getEmailAddress())) {
             return ResponseEntity.status(409).body("이미 존재하는 이메일 입니다.");
         }
         memberService.updateMember(id, updatedMember);
