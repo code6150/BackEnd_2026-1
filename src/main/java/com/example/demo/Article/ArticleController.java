@@ -1,6 +1,7 @@
 package com.example.demo.Article;
 
 import com.example.demo.Board.BoardService;
+import com.example.demo.Member.Member;
 import com.example.demo.Member.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -27,8 +29,11 @@ public class ArticleController {
     public String getArticlesView(@RequestParam Long boardId, Model model) {
         String boardTitle = boardService.getBoard(boardId).getBoardName();
         model.addAttribute("boardTitle", boardTitle);
-        model.addAttribute("articles", articleService.getArticles());
-        model.addAttribute("members", memberService.getMembers());
+        model.addAttribute("articles", articleService.getArticlesByBoardId(boardId));
+        Map<Long, Member> memberMap = memberService.getMembers()
+                .stream()
+                .collect(Collectors.toMap(Member::getId, m -> m));
+        model.addAttribute("memberMap", memberMap);
         return "articles";
     }
 
