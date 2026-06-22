@@ -35,10 +35,10 @@ public class ArticleController {
     @ResponseBody
     @GetMapping("/article/{id}")
     public ResponseEntity<?> getArticle(@PathVariable Long id) {
-        if (articleService.getArticle(id) == null) {
+        if (articleService.getArticlesByBoardId(id) == null) {
             return ResponseEntity.status(404).body("존재하지 않는 게시물입니다.");
         }
-        return ResponseEntity.ok(articleService.getArticles().get(id));
+        return ResponseEntity.ok(articleService.getArticlesByBoardId(id));
     }
 
     @ResponseBody
@@ -65,7 +65,7 @@ public class ArticleController {
         if (boardService.getBoard(boardId) == null) {
             return ResponseEntity.status(400).body("현재 존재하지 않는 게시판입니다.");
         }
-        articleService.creatArticle(boardId, memberId,title, description);
+        articleService.createArticle(boardId, memberId,title, description);
         return ResponseEntity.ok("생성 완료");
     }
 
