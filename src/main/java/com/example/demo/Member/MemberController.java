@@ -1,6 +1,5 @@
 package com.example.demo.Member;
 
-import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +42,7 @@ public class MemberController {
         if (nickName == null || email == null || passWord == null) {
             return ResponseEntity.status(400).body("조건을 충족하지 못한 요청입니다.");
         }
-        memberService.creatMember(nickName, email, passWord);
+        memberService.createMember(nickName, email, passWord);
         return ResponseEntity.ok("생성 완료");
     }
 

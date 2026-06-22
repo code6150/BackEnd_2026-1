@@ -29,6 +29,23 @@ public class MemberRepository {
         );
     }
 
+    public void update(Member member) {
+
+        String sql = """
+            UPDATE member
+            SET name = ?, email = ?, password = ?
+            WHERE id = ?
+            """;
+
+        jdbcTemplate.update(
+                sql,
+                member.getNickName(),
+                member.getEmailAddress(),
+                member.getPassWord(),
+                member.getId()
+        );
+    }
+
     public List<Member> findAll() {
 
         String sql = "SELECT * FROM member";

@@ -30,7 +30,7 @@ public class MemberService {
     }
 
     @Transactional
-    public void creatMember(String nickName, String email, String passWord) {
+    public void createMember(String nickName, String email, String passWord) {
 
         Member member = new Member(
                 nickName,
