@@ -1,8 +1,9 @@
 package com.example.demo.Member;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class MemberService {
@@ -13,26 +14,49 @@ public class MemberService {
         this.members = membersRepository;
     }
 
-    public HashMap<Long, Member> getMembers() {
+    @Transactional(readOnly = true)
+    public List<Member> getMembers() {
         return members.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public Member getMember(Long id) {
+        return members.findById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean existsByEmailAddress(String emailAddress) {
+        return members.existsByEmailAddress(emailAddress);
+    }
+
+    @Transactional
+    public void creatMember(String nickName, String email, String passWord) {
+
+        Member member = new Member(
+                nickName,
+                email,
+                passWord
+        );
+
+        members.save(member);
+    }
+
+    @Transactional
     public void updateMember(Long id, Member updatedMember) {
-        Member modifiedMember = members.findAll().get(id);
-        modifiedMember.modifyMember(
+
+        Member member = members.findById(id);
+
+        member.modifyMember(
                 updatedMember.getNickName(),
                 updatedMember.getEmailAddress(),
                 updatedMember.getPassWord()
         );
-        members.findAll().put(id, modifiedMember);
+
+        members.update(member);
     }
 
-    public void creatMember(String nickName, String email, String passWord) {
-        Member newMember = new Member(nickName, email, passWord);
-        members.findAll().put(newMember.getId(), newMember);
-    }
-
+    @Transactional
     public void deleteMember(Long id) {
-        members.findAll().remove(id);
+        members.delete(id);
     }
 }

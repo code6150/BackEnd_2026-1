@@ -2,21 +2,17 @@ package com.example.demo.Member;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import java.util.HashMap;
+
+import java.util.List;
 
 @Repository
 public class MemberRepository {
 
-    private final HashMap<Long, Member> members = new HashMap<>();
+    private final JdbcTemplate jdbcTemplate;
 
     public MemberRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.members.put(1L, new Member("회원1", "member1@gmail.com", "1111"));
-        this.members.put(2L, new Member("회원2", "member2@gmail.com", "2222"));
-        this.members.put(3L, new Member("회원3", "member3@gmail.com", "3333"));
     }
-
-    private final JdbcTemplate jdbcTemplate;
 
     public void save(Member member) {
 
@@ -33,21 +29,62 @@ public class MemberRepository {
         );
     }
 
-    public HashMap<Long, Member> findAll() {
-        return members;
+    public List<Member> findAll() {
+
+        String sql = "SELECT * FROM member";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+
+            Member member = new Member();
+
+            member.setId(rs.getLong("id"));
+            member.setNickName(rs.getString("name"));
+            member.setEmailAddress(rs.getString("email"));
+            member.setPassWord(rs.getString("password"));
+
+            return member;
+        });
     }
 
     public Member findById(Long id) {
-        return members.get(id);
+
+        String sql = """
+                SELECT *
+                FROM member
+                WHERE id = ?
+                """;
+
+        return jdbcTemplate.queryForObject(
+                sql,
+                (rs, rowNum) -> {
+
+                    Member member = new Member();
+
+                    member.setId(rs.getLong("id"));
+                    member.setNickName(rs.getString("name"));
+                    member.setEmailAddress(rs.getString("email"));
+                    member.setPassWord(rs.getString("password"));
+
+                    return member;
+                },
+                id
+        );
     }
 
     public boolean existsByEmailAddress(String emailAddress) {
-        for (Member member : members.values()) {
-            if (member.getEmailAddress().equals(emailAddress)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
+        String sql = """
+                SELECT COUNT(*)
+                FROM member
+                WHERE email = ?
+                """;
+
+        Integer count = jdbcTemplate.queryForObject(
+                sql,
+                Integer.class,
+                emailAddress
+        );
+
+        return count != null && count > 0;
+    }
 }
