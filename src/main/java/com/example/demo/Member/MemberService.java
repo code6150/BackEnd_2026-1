@@ -31,28 +31,19 @@ public class MemberService {
 
     @Transactional
     public void createMember(String nickName, String email, String passWord) {
-
-        Member member = new Member(
-                nickName,
-                email,
-                passWord
-        );
-
+        Member member = new Member(nickName, email, passWord);
         members.save(member);
     }
 
     @Transactional
     public void updateMember(Long id, Member updatedMember) {
-
         Member member = members.findById(id);
-
         member.modifyMember(
                 updatedMember.getNickName(),
                 updatedMember.getEmailAddress(),
                 updatedMember.getPassWord()
         );
-
-        members.update(member);
+        // Dirty Checking으로 자동 업데이트됨
     }
 
     @Transactional
