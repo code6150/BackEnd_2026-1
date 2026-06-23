@@ -32,14 +32,9 @@ public class BoardService {
 
     @Transactional
     public void updateBoard(Long id, Board updatedBoard) {
-
         Board board = boards.findById(id);
-
-        board.modifyBoard(
-                updatedBoard.getBoardName()
-        );
-
-        boards.update(board);
+        board.modifyBoard(updatedBoard.getBoardName());
+        // Dirty Checking으로 자동 업데이트됨
     }
 
     @Transactional
