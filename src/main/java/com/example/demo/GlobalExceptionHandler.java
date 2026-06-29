@@ -15,4 +15,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ClassNotFoundException.class)
+    public ResponseEntity<String> classNotFoundException(
+            IllegalArgumentException ex
+    ) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
 }

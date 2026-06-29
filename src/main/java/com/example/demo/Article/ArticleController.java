@@ -62,13 +62,13 @@ public class ArticleController {
     @PostMapping("/article")
     public ResponseEntity<?> createArticle(@RequestParam Long boardId, @RequestParam Long memberId, @RequestParam String title,@RequestParam String description) {
         if (title == null || description == null) {
-            return ResponseEntity.status(400).body("조건을 충족하지 못한 요청입니다.");
+            throw new IllegalArgumentException("조건을 충족하지 못한 요청입니다.");
         }
         if (memberService.getMember(memberId) == null) {
-            return ResponseEntity.status(400).body("게시글을 작성한 회원이 없습니다;;");
+            throw new IllegalArgumentException("게시글을 작성한 회원이 없습니다;;");
         }
         if (boardService.getBoard(boardId) == null) {
-            return ResponseEntity.status(400).body("현재 존재하지 않는 게시판입니다.");
+            throw new IllegalArgumentException("현재 존재하지 않는 게시판입니다.");
         }
         articleService.createArticle(boardId, memberId,title, description);
         return ResponseEntity.ok("생성 완료");
@@ -86,10 +86,10 @@ public class ArticleController {
     public ResponseEntity<?> updateArticle(@PathVariable Long id, @RequestBody Article updatedArticle) {
 
         if (memberService.getMember(updatedArticle.getMemberId()) == null) {
-            return ResponseEntity.status(400).body("게시글을 작성한 회원이 없습니다;;");
+            throw new IllegalArgumentException("게시글을 작성한 회원이 없습니다;;");
         }
         if (boardService.getBoard(updatedArticle.getBoardId()) == null) {
-            return ResponseEntity.status(400).body("현재 존재하지 않는 게시판입니다.");
+            throw new IllegalArgumentException("현재 존재하지 않는 게시판입니다.");
         }
         articleService.updateArticle(id, updatedArticle);
         return ResponseEntity.ok("수정 완료");
