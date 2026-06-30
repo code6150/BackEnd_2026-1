@@ -26,7 +26,7 @@ public class ArticleService {
 
     @Transactional
     public void createArticle(Long boardId, Long memberId, String title, String description) {
-        Article article = new Article(title, description, memberId, boardId);
+        Article article = new Article(title, description, memberId);
         articles.save(article);
     }
 
@@ -36,7 +36,7 @@ public class ArticleService {
 
         article.setTitle(updatedArticle.getTitle());
         article.setDescription(updatedArticle.getDescription());
-        article.setLastModifiedTime(LocalDateTime.now());
+        article.setModifiedDate(LocalDateTime.now());
 
         // em.merge(article) 또는 articles.update() 호출 불필요
         // 트랜잭션 커밋 시 자동으로 UPDATE 쿼리 실행됨

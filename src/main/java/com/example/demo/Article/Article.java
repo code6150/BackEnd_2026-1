@@ -1,9 +1,11 @@
 package com.example.demo.Article;
 
+import com.example.demo.Board.Board;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,6 +19,7 @@ public class Article {
     private Long id;
 
     private String title;
+
     private String description;
 
     @Column(name = "created_date")
@@ -25,14 +28,19 @@ public class Article {
     @Column(name = "modified_date")
     private LocalDateTime modifiedDate;
 
+    @Column(name = "author_id")
     private Long memberId;
-    private Long boardId;
 
-    public Article(String title, String description, Long memberId, Long boardId) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
+    private Board board;
+
+    public Article(String title, String description, Long memberId) {
         this.title = title;
         this.description = description;
         this.memberId = memberId;
-        this.boardId = boardId;
         this.createdDate = LocalDateTime.now();
+        this.modifiedDate = LocalDateTime.now();
     }
+
 }
